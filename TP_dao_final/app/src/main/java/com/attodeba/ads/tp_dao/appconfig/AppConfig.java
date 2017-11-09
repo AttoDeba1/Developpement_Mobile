@@ -7,15 +7,12 @@ import com.orm.SugarApp;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
 
-/**
- * Created by persol on 25/10/17.
- */
 
 public class AppConfig extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-     //   SugarContext.init(getApplicationContext());
+        SugarContext.init(getApplicationContext());
       // SchemaGenerator schemaGenerator = new SchemaGenerator(this);
      //  schemaGenerator.createDatabase(new SugarDb(this).getDB());
     }
@@ -23,6 +20,6 @@ public class AppConfig extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-       // SugarContext.terminate();
+       SugarContext.terminate();
     }
 }

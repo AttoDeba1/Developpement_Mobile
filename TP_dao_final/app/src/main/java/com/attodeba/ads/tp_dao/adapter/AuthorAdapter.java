@@ -12,9 +12,6 @@ import com.attodeba.ads.tp_dao.models.Author;
 
 import java.util.List;
 
-/**
- * Created by persol on 17/10/17.
- */
 
 public class AuthorAdapter extends ArrayAdapter<Author> {
 
