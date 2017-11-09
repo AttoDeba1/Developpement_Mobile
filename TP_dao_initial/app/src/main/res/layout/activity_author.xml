@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.attodeba.ads.tp_dao.AuthorActivity">
+
+    <EditText
+        android:id="@+id/authorName"
+        android:layout_width="346dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Author name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/authorFName"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="96dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Author first name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorName" />
+
+
+    <Button
+        android:id="@+id/saveAuthorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="36dp"
+        android:text="save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorFName" />
+
+</android.support.constraint.ConstraintLayout>
