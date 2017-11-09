@@ -24,6 +24,9 @@ public class Home extends AppCompatActivity {
     public List<Author> list;
     public ListView listView;
     public Intent intent;
+    final  String UPDATE_DATA= "UPDATE";
+    final String AUTHOR_ID="author_id";
+    final String LISTING = "listing";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,11 @@ public class Home extends AppCompatActivity {
                 Author auteur = list.get(position);
                 String msg = auteur.toString() + " est bien modifié de la base de donnée ";
                 intent = new Intent(Home.this, AuthorActivity.class);
-                intent.putExtra("auhor_id", auteur.getId());
-                Home.this.setResult(RESULT_OK, intent);
-                startActivityForResult(intent , 0);
+                long id = auteur.getId();
+                intent.putExtra(AUTHOR_ID,(int)id);
+                intent.setAction(UPDATE_DATA);
+                //Home.this.setResult(RESULT_OK, intent);
+                startActivity(intent);
 
             }
         });

@@ -5,6 +5,7 @@ package com.attodeba.ads.tp_dao.models;
  */
 import com.orm.SugarRecord;
 import com.orm.dsl.Column;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 
 @Table(name="Book")
@@ -13,14 +14,16 @@ public class Book extends SugarRecord {
      private String title;
     @Column(name = "price")
     private  String price;
+    @Column(name="quantity")
     private  int  quantity;
-
+    @Ignore
     private Author author;
 
-    public Book() { }
+    public Book() {this.author = SugarRecord.last(Author.class); }
     public Book(String title,String price){
         this.title=title;
         this.price=price;
+        this.author = SugarRecord.last(Author.class);
     }
 
     public Book(String title, String price, int quantity, Author authors) {

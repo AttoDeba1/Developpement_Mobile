@@ -13,18 +13,33 @@ import android.widget.Toast;
 import com.attodeba.ads.tp_dao.models.Author;
 import com.orm.SugarRecord;
 
-public class AuthorActivity extends AppCompatActivity {
+import java.util.List;
 
+public class AuthorActivity extends AppCompatActivity {
+final  String UPDATE_DATA= "UPDATE";
+final String AUTHOR_ID="author_id";
+final String LISTING = "listing";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author);
+
     }
 
      @Override
      public void onResume(){
          super.onResume();
-         setContentView(R.layout.activity_author);
+         Intent result = getIntent();
+         String action = result.getAction();
+         if(action==null) setContentView(R.layout.activity_author);
+
+         if(action==UPDATE_DATA) {
+             int author_id = getIntent().getIntExtra(AUTHOR_ID,11 );
+             setUpdateView(author_id);
+         }
+         else{
+             if(action==LISTING) setUpdateView(5);
+         }
          findViewById(R.id.saveAuthorButton).setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -91,5 +106,14 @@ public class AuthorActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_crud, menu);
         return true;
+    }
+    public void setUpdateView(int id){
+        Author author = SugarRecord.findById(Author.class, (long)id);
+        findViewById(R.id.authorFName).setText(author.getName());
+        findViewById(R.id.authorName).setText(author.getName());
+        findViewById(R.id.saveAuthorButton).setText(author.getName());
+
+        setContentView(R.layout.activity_author);
+
     }
 }
