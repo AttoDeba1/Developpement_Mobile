@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.attodeba.ads.tp_dao.models.Author;
 import com.attodeba.ads.tp_dao.models.Book;
-import com.orm.SugarRecord;
+//import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AddBook extends AppCompatActivity {
         quantity=(EditText) findViewById(R.id.qtyTextView);
         authorspin = (Spinner) findViewById(R.id.authorspinner);
 
-        List listauthors = SugarRecord.listAll(Author.class);
+       // List listauthors = SugarRecord.listAll(Author.class);
         List spinValue = new ArrayList();
        /* for (Author author: listauthors ){
             spinValue.add(author.toString());
@@ -47,21 +47,22 @@ public class AddBook extends AppCompatActivity {
             public void onClick(View v) {
                 boolean addBookOK=false;
                 try{
-                      //  Author author = new Author(authorName.getText().toString(),authorFirstName.getText().toString());
-                        book.setTitle(title.getText().toString());
-                        book.setPrice(price.getText().toString());
-                        book.setQuantity(Integer.parseInt(quantity.getText().toString()));
-                        //book.setAuthor(author);
-                       if(book.isValid()) book.save();
-                        addBookOK=book.isValid();
+                      if((title.getText().toString()!="") && (price.getText().toString()!="" )&& (quantity.getText().toString()!="") ) {
+                          book.setTitle(title.getText().toString());
+                          book.setPrice(price.getText().toString());
+                          book.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                          //book.setAuthor(author);
+                         // if (book.isValid()) book.save();
+                          addBookOK = book.isValid();
+                      }
                 }
                 catch (Exception e) {
                     addBookOK=false;
                     Toast.makeText(AddBook.this, e.getCause().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-                Intent result = new Intent();
-                result.putExtra("bookId", book.getId());
+                Intent result = new Intent(AddBook.this, Home.class);
+               // result.putExtra("bookId", book.getId());
 
                 if(addBookOK) {
                     AddBook.this.setResult(RESULT_OK, result);

@@ -34,7 +34,7 @@ public class AuthorAdapter extends ArrayAdapter<Author> {
         TextView authorName = (TextView) view.findViewById(R.id.author_name);
         TextView authorFName =(TextView) view.findViewById(R.id.author_fname);
 
-        authorName.setText(author.getId()+"  "+author.getName());
+        authorName.setText("  "+author.getName());
         authorFName.setText(author.getFirstName());
         return view;
     }

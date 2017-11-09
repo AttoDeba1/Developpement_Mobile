@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity {
                 Author auteur = list.get(position);
                 String msg = auteur.toString() + " est bien modifié de la base de donnée ";
                 intent = new Intent(Home.this, AuthorActivity.class);
-                intent.putExtra("auhor_id", auteur.getId());
+               // intent.putExtra("auhor_id", auteur.getId());
                 Home.this.setResult(RESULT_OK, intent);
                 startActivityForResult(intent , 0);
 
@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity {
     public void updateView(){
         listView = (ListView) findViewById(R.id.listView);
         try {
-            list = Author.listAll(Author.class);
+           // list = Author.listAll(Author.class);
             AuthorAdapter adapter = new AuthorAdapter(Home.this,list);
             listView.setAdapter(adapter);
         }
@@ -86,9 +86,9 @@ public class Home extends AppCompatActivity {
 
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(Home.this, "Livre ajouté", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Home.this, "ajouté", Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(Home.this, "Livre non ajouté", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Home.this, "non ajouté", Toast.LENGTH_SHORT).show();
             }
         }
     }

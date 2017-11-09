@@ -1,16 +1,12 @@
 package com.attodeba.ads.tp_dao.appconfig;
 
 import android.app.Application;
-
+/*
 import com.orm.SchemaGenerator;
 import com.orm.SugarApp;
 import com.orm.SugarContext;
 import com.orm.SugarDb;
-
-/**
- * Created by persol on 25/10/17.
- */
-
+*/
 public class AppConfig extends Application {
     @Override
     public void onCreate(){

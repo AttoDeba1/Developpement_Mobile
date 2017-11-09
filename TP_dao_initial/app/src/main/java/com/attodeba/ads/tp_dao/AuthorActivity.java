@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.attodeba.ads.tp_dao.models.Author;
-import com.orm.SugarRecord;
+//import com.orm.SugarRecord;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class AuthorActivity extends AppCompatActivity {
                      Author author;
                      if(name!="" && firstname!=""){
                          author = new Author(name,firstname);
-                        if(author.isValid()) author.save();
+                   //     if(author.isValid()) author.save();
                          saveOK=author.isValid();
                          toastMsg= author.toString()+"est bien ajouté dans la base de donnée";
                          Toast.makeText(AuthorActivity.this, toastMsg, Toast.LENGTH_SHORT).show();
@@ -76,9 +76,8 @@ public class AuthorActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       int id;
         id = data.getExtras().getInt("author_id");
-        Author auteur = SugarRecord.findById(Author.class, id);
-        Log.i("Author", auteur.toString());
-        Toast.makeText(AuthorActivity.this, auteur.toString(), Toast.LENGTH_SHORT).show();
+       // Author auteur = SugarRecord.findById(Author.class, id);
+        //Toast.makeText(AuthorActivity.this, auteur.toString(), Toast.LENGTH_SHORT).show();
 
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
