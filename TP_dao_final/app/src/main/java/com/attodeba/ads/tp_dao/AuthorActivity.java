@@ -16,49 +16,77 @@ import com.orm.SugarRecord;
 import java.util.List;
 
 public class AuthorActivity extends AppCompatActivity {
-final  String UPDATE_DATA= "UPDATE";
-final String AUTHOR_ID="author_id";
-final String LISTING = "listing";
+    final String UPDATE_DATA= "UPDATE";
+    final String AUTHOR_ID="author_id";
+    final String LISTING = "listing";
+    final String SAVE_ACTION="save";
+    final String UPDATE_ACTION="update";
+    public EditText  authorFirstNameET;
+    public EditText authorNameET;
+    public Button saveButton;
+    public Author author;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author);
-
+        this.authorFirstNameET=(EditText) findViewById(R.id.authorFName);
+        this.authorNameET = (EditText) findViewById(R.id.authorName);
+        this.saveButton = (Button) findViewById(R.id.saveAuthorButton);
+        this.author= new Author();
     }
+   @Override
+   public void onStart(){
+        super.onStart();
+        this.author=new Author();
 
+       Intent result = getIntent();
+       String action = result.getAction();
+       if(action==UPDATE_DATA) {
+           int author_id = getIntent().getIntExtra(AUTHOR_ID,11 );
+           setUpdateView(author_id);
+       }
+       else{
+           saveButton.setText(SAVE_ACTION);
+           if(action==null) setContentView(R.layout.activity_author);
+           else if(action==LISTING) setListView();
+       }
+   }
      @Override
      public void onResume(){
          super.onResume();
          Intent result = getIntent();
          String action = result.getAction();
-         if(action==null) setContentView(R.layout.activity_author);
-
-         if(action==UPDATE_DATA) {
-             int author_id = getIntent().getIntExtra(AUTHOR_ID,11 );
-             setUpdateView(author_id);
-         }
-         else{
-             if(action==LISTING) setUpdateView(5);
-         }
          findViewById(R.id.saveAuthorButton).setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
 
-                 EditText authorFirstName=(EditText) findViewById(R.id.authorFName);
-                 EditText authorName = (EditText) findViewById(R.id.authorName);
-                 Button saveButton = (Button) findViewById(R.id.saveAuthorButton);
+                 authorFirstNameET=(EditText)findViewById(R.id.authorFName);
+                 authorNameET = (EditText) findViewById(R.id.authorName);
+
                  boolean saveOK=false;
                  String toastMsg;
 
                  try{
-                     String name= authorName.getText().toString();
-                     String firstname = authorFirstName.getText().toString();
-                     Author author;
+                     String name= authorNameET.getText().toString();
+                     String firstname = authorFirstNameET.getText().toString();
                      if(name!="" && firstname!=""){
-                         author = new Author(name,firstname);
-                        if(author.isValid()) author.save();
+                         boolean isSaveAction = (saveButton.getText().toString()==SAVE_ACTION);
+                         if(isSaveAction){
+                             author = new Author(name,firstname);
+
+                             SugarRecord.save(author);
+                         }
+                         else{
+                             long id=author.getId();
+                             author= SugarRecord.findById(Author.class,id);
+                             author.setFirstName(firstname);
+                             author.setName(name);
+                             SugarRecord.save(author);
+                             //author.save();
+                             saveButton.setText(SAVE_ACTION);
+                         }
                          saveOK=author.isValid();
-                         toastMsg= author.toString()+"est bien ajouté dans la base de donnée";
+                         toastMsg= author.toString()+"est bien "+(isSaveAction?"ajouté":"modifié")+" dans la base de donnée";
                          Toast.makeText(AuthorActivity.this, toastMsg, Toast.LENGTH_SHORT).show();
                      }
                      else {
@@ -108,12 +136,19 @@ final String LISTING = "listing";
         return true;
     }
     public void setUpdateView(int id){
-        Author author = SugarRecord.findById(Author.class, (long)id);
-        findViewById(R.id.authorFName).setText(author.getName());
-        findViewById(R.id.authorName).setText(author.getName());
-        findViewById(R.id.saveAuthorButton).setText(author.getName());
+        author = SugarRecord.findById(Author.class, (long)id);
+        authorFirstNameET.setText(author.getFirstName());
+        authorNameET.setText(author.getName());
+        saveButton.setText(UPDATE_ACTION);
+    }
+    /****methode permetant de mettre à jour un author *****/
+    public void updateAuthor(){
 
-        setContentView(R.layout.activity_author);
+    }
+    public void saveAuthor(){
+
+    }
+    public void setListView(){
 
     }
 }

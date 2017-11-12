@@ -3,9 +3,11 @@ package com.attodeba.ads.tp_dao;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,63 +20,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddBook extends AppCompatActivity {
-    public EditText title;
-    public EditText price;
-    public EditText quantity;
-    public EditText authorName;
-    public EditText authorFirstName;
+    public EditText titleET;
+    public EditText priceET;
+    public EditText quantityET;
     public Book book;
     public Spinner authorspin;
+    public List<Author> listauthors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
-        title=(EditText) findViewById(R.id.titleTextView);
-        price=(EditText) findViewById(R.id.priceTextView);
-        quantity=(EditText) findViewById(R.id.qtyTextView);
-        authorspin = (Spinner) findViewById(R.id.authorspinner);
-
-        List listauthors = SugarRecord.listAll(Author.class);
-        List spinValue = new ArrayList();
-       /* for (Author author: listauthors ){
-            spinValue.add(author.toString());
-        }*/
-        ArrayAdapter adapter = new ArrayAdapter(AddBook.this,android.R.layout.simple_list_item_1 ,spinValue);
+        this.titleET=(EditText) findViewById(R.id.titleET);
+        this.priceET=(EditText) findViewById(R.id.priceET);
+        this.quantityET=(EditText) findViewById(R.id.qtyET);
+        this.authorspin = (Spinner) findViewById(R.id.authorspinner);
+        this.listauthors = SugarRecord.listAll(Author.class);
+        List spinlist = new ArrayList();
+       for (int i= 0; i< listauthors.size(); i++ ){
+           Author author = listauthors.get(i);
+            spinlist.add(author.toString());
+        }
+       ArrayAdapter adapter = new ArrayAdapter(AddBook.this,android.R.layout.simple_list_item_1 ,spinlist);
         this.book= new Book();
         authorspin.setAdapter(adapter);
-        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.saveBookButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean addBookOK=false;
+                String title=titleET.getText().toString(),
+                        price=priceET.getText().toString(),
+                        toastMsg;
+                 int selectAuthor_id = (int)authorspin.getSelectedItemId();
+                 int quantity=Integer.parseInt(quantityET.getText().toString());
+
                 try{
-                      Author author = new Author(authorName.getText().toString(),authorFirstName.getText().toString());
-                        book.setTitle(title.getText().toString());
-                        book.setPrice(price.getText().toString());
-                        book.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                    if(price!="" && title!="" && quantity>=0){
+                        Author author = listauthors.get(selectAuthor_id);
+                        book.setTitle(title);
+                        book.setPrice(price);
+                        book.setQuantity(quantity);
                         book.setAuthor(author);
-                       if(book.isValid()) book.save();
-                        addBookOK=book.isValid();
+                        SugarRecord.save(book);
+                        List<Book> liste = SugarRecord.listAll(Book.class);
+                        toastMsg="le livre "+book.toString()+" est bien ajouté";
+                        Toast.makeText(AddBook.this,toastMsg, Toast.LENGTH_SHORT).show();
+                       int ppp= liste.size();
+                        int b=0;
+                    }
+                    else{
+                        toastMsg="champs vides";
+                        Toast.makeText(AddBook.this,toastMsg, Toast.LENGTH_SHORT).show();
+
+                    }
+
                 }
                 catch (Exception e) {
-                    addBookOK=false;
-                    Toast.makeText(AddBook.this, e.getCause().getMessage(), Toast.LENGTH_SHORT).show();
+                    toastMsg="data base exception";
+                    Toast.makeText(AddBook.this,toastMsg, Toast.LENGTH_SHORT).show();
                 }
-
-                Intent result = new Intent();
-                result.putExtra("bookId", book.getId());
-
-                if(addBookOK) {
-                    AddBook.this.setResult(RESULT_OK, result);
-                    AddBook.this.finish();
-                }
-
 
             }
         });
-
-
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        this.listauthors = SugarRecord.listAll(Author.class);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_crud, menu);

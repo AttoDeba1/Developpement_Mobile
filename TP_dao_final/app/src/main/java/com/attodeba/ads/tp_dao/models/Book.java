@@ -16,7 +16,7 @@ public class Book extends SugarRecord {
     private  String price;
     @Column(name="quantity")
     private  int  quantity;
-    @Ignore
+   // @Ignore
     private Author author;
 
     public Book() {this.author = SugarRecord.last(Author.class); }
