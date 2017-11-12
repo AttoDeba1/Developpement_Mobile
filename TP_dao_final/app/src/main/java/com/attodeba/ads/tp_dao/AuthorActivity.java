@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +21,7 @@ import java.util.List;
 public class AuthorActivity extends AppCompatActivity {
     final String UPDATE_DATA= "UPDATE";
     final String AUTHOR_ID="author_id";
-    final String LISTING = "listing";
+    //final String LISTING = "listing";
     final String SAVE_ACTION="save";
     final String UPDATE_ACTION="update";
     public EditText  authorFirstNameET;
@@ -33,12 +36,12 @@ public class AuthorActivity extends AppCompatActivity {
         this.authorNameET = (EditText) findViewById(R.id.authorName);
         this.saveButton = (Button) findViewById(R.id.saveAuthorButton);
         this.author= new Author();
+
     }
    @Override
    public void onStart(){
         super.onStart();
         this.author=new Author();
-
        Intent result = getIntent();
        String action = result.getAction();
        if(action==UPDATE_DATA) {
@@ -48,7 +51,6 @@ public class AuthorActivity extends AppCompatActivity {
        else{
            saveButton.setText(SAVE_ACTION);
            if(action==null) setContentView(R.layout.activity_author);
-           else if(action==LISTING) setListView();
        }
    }
      @Override
@@ -71,19 +73,13 @@ public class AuthorActivity extends AppCompatActivity {
                      String firstname = authorFirstNameET.getText().toString();
                      if(name!="" && firstname!=""){
                          boolean isSaveAction = (saveButton.getText().toString()==SAVE_ACTION);
-                         if(isSaveAction){
-                             author = new Author(name,firstname);
 
-                             SugarRecord.save(author);
-                         }
+                         if(isSaveAction){
+                             saveAuthor(name,firstname);
+                          }
                          else{
                              long id=author.getId();
-                             author= SugarRecord.findById(Author.class,id);
-                             author.setFirstName(firstname);
-                             author.setName(name);
-                             SugarRecord.save(author);
-                             //author.save();
-                             saveButton.setText(SAVE_ACTION);
+                             updateAuthor(id,name,firstname);
                          }
                          saveOK=author.isValid();
                          toastMsg= author.toString()+"est bien "+(isSaveAction?"ajouté":"modifié")+" dans la base de donnée";
@@ -115,20 +111,6 @@ public class AuthorActivity extends AppCompatActivity {
 
      }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      int id;
-        id = data.getExtras().getInt("author_id");
-        Author auteur = SugarRecord.findById(Author.class, id);
-        Log.i("Author", auteur.toString());
-        Toast.makeText(AuthorActivity.this, auteur.toString(), Toast.LENGTH_SHORT).show();
-
-        if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-            }
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,14 +123,21 @@ public class AuthorActivity extends AppCompatActivity {
         authorNameET.setText(author.getName());
         saveButton.setText(UPDATE_ACTION);
     }
-    /****methode permetant de mettre à jour un author *****/
-    public void updateAuthor(){
 
-    }
-    public void saveAuthor(){
 
+    /****methode permetant de mettre à jour un auteur *****/
+    public void updateAuthor(long authorId, String firstname, String name){
+        author= SugarRecord.findById(Author.class,authorId);
+        author.setFirstName(firstname);
+        author.setName(name);
+        SugarRecord.save(author);
+        //author.save();
+        saveButton.setText(SAVE_ACTION);
     }
-    public void setListView(){
+    /****methode permetant d'ajouter un nouveau auteur *****/
+    public void saveAuthor(String name, String firstname){
+        author = new Author(name,firstname);
+        SugarRecord.save(author);
+    }
 
-    }
 }

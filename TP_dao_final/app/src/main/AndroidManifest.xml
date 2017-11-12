@@ -9,11 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="DATABASE" android:value="final_db_books.db" />
-        <meta-data android:name="VERSION"  android:value="6" />
-        <meta-data  android:name="QUERY_LOG" android:value="true" />
-        <meta-data  android:name="DOMAIN_PACKAGE_NAME" android:value="com.attodeba.ads" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="final_db_books.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="6" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.attodeba.ads" />
 
         <activity
             android:name=".Home"
@@ -26,7 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddBook" />
-        <activity android:name=".AuthorActivity"></activity>
+        <activity android:name=".AuthorActivity" />
+        <activity android:name=".AuthorList"></activity>
     </application>
 
 </manifest>
