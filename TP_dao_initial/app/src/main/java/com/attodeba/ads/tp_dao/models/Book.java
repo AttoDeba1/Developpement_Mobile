@@ -1,24 +1,35 @@
 package com.attodeba.ads.tp_dao.models;
 
+/**
+ * Created by persol on 12/10/17.
+ */
 
-//import com.orm.SugarRecord;
-//import com.orm.dsl.Column;
-//import com.orm.dsl.Table;
+//etape 1
+/*
+import com.orm.SugarRecord;
+import com.orm.dsl.Column;
+import com.orm.dsl.Ignore;
+import com.orm.dsl.Table;
+*/
 
 //@Table(name="Book")
-public class Book /*extends SugarRecord */ {
-    // @Column(name="title")
+public class Book /* extends SugarRecord */ {
+   //  @Column(name="title")
      private String title;
    // @Column(name = "price")
     private  String price;
+   // @Column(name="quantity")
     private  int  quantity;
-
+   // @Ignore
     private Author author;
-
-    public Book() { }
+    //Methode à commenter
+    public long getId(){ return 2;}
+    public Book() {//this.author = SugarRecord.last(Author.class);
+             }
     public Book(String title,String price){
         this.title=title;
         this.price=price;
+        //this.author = SugarRecord.last(Author.class);
     }
 
     public Book(String title, String price, int quantity, Author authors) {
@@ -61,7 +72,7 @@ public class Book /*extends SugarRecord */ {
         return this.title;
     }
     public boolean isValid(){
-        return (this.title!=null) && (this.price!=null) ;
+        return (this.title!=null) && (this.price!=null) ; //&& (this.author.isValid());
     }
 
 }

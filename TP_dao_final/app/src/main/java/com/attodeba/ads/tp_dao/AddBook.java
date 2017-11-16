@@ -64,8 +64,6 @@ public class AddBook extends AppCompatActivity {
                         List<Book> liste = SugarRecord.listAll(Book.class);
                         toastMsg="le livre "+book.toString()+" est bien ajouté";
                         Toast.makeText(AddBook.this,toastMsg, Toast.LENGTH_SHORT).show();
-                       int ppp= liste.size();
-                        int b=0;
                     }
                     else{
                         toastMsg="champs vides";

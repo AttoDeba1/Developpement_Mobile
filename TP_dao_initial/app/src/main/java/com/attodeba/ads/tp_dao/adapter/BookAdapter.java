@@ -19,15 +19,13 @@ import java.util.List;
  */
 
 public class BookAdapter extends ArrayAdapter<Book> {
-   // private  LayoutInflater mInflater;
-   // private  ArrayList<Book> listBooks;
+
     public BookAdapter(Context context, List<Book> listBooks) {
         super(context, R.layout.list_books_view, listBooks);
     }
 
     @Override
     public View getView(int index, View convertView, ViewGroup parent) {
-        // Verification que la vue existe sinon on l'a creé
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_books_view, parent, false);
@@ -35,17 +33,19 @@ public class BookAdapter extends ArrayAdapter<Book> {
          }
 
           Book book = getItem(index);
-
+            String tt= book.toString();
             // Recuperation des differents composants de la vue
             TextView title = (TextView) convertView.findViewById(R.id.book_title);
             TextView price =(TextView) convertView.findViewById(R.id.book_price);
             TextView quantity =(TextView) convertView.findViewById(R.id.book_qty);
             TextView author = (TextView) convertView.findViewById(R.id.book_author);
 
-            title.setText(book.getTitle());
-            price.setText(book.getPrice());
-            quantity.setText(book.getQuantity());
-            author.setText("author");
+            title.setText(" Title:  "+book.getTitle());
+            price.setText(" Price:  "+book.getPrice());
+            quantity.setText(" Quantity :"+Integer.toString(book.getQuantity()));
+            author.setText(" Author :"+ ( (book.getAuthor()!=null)?
+                                                book.getAuthor().toString()
+                                                :" undefined"));
 
 
         return convertView;

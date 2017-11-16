@@ -12,9 +12,6 @@ import com.attodeba.ads.tp_dao.models.Author;
 
 import java.util.List;
 
-/**
- * Created by persol on 17/10/17.
- */
 
 public class AuthorAdapter extends ArrayAdapter<Author> {
 
@@ -34,7 +31,7 @@ public class AuthorAdapter extends ArrayAdapter<Author> {
         TextView authorName = (TextView) view.findViewById(R.id.author_name);
         TextView authorFName =(TextView) view.findViewById(R.id.author_fname);
 
-        authorName.setText("  "+author.getName());
+        authorName.setText(author.getId()+"  "+author.getName());
         authorFName.setText(author.getFirstName());
         return view;
     }

@@ -1,16 +1,17 @@
 package com.attodeba.ads.tp_dao.models;
+
+//Etape 1
 /*
 import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 */
 //@Table(name="Author")
-public class Author /*extends SugarRecord */  {
-  //@Column(name="name")
+public class Author /* extends SugarRecord */  {
+   // @Column(name="name")
     private String name;
-   //@Column(name="firstName")
+   // @Column(name="firstName")
     private String firstName;
-
     public Author() {
     }
 
@@ -18,7 +19,10 @@ public class Author /*extends SugarRecord */  {
         this.name = name;
         this.firstName = firstName;
     }
+    //Methode à commenter
+    public long getId(){ return 2;}
 
+    //getteur et setteur de la classe
     public String getName() {
         return name;
     }
@@ -40,7 +44,7 @@ public class Author /*extends SugarRecord */  {
     }
     @Override
     public String toString(){
-        return /*this.getId()+*/"  "+this.getName()+"  "+this.getFirstName();
+        return this.getId()+"  "+this.getName()+"  "+this.getFirstName();
     }
 
 

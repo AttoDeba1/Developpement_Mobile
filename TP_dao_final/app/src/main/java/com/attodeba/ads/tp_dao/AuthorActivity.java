@@ -21,7 +21,6 @@ import java.util.List;
 public class AuthorActivity extends AppCompatActivity {
     final String UPDATE_DATA= "UPDATE";
     final String AUTHOR_ID="author_id";
-    //final String LISTING = "listing";
     final String SAVE_ACTION="save";
     final String UPDATE_ACTION="update";
     public EditText  authorFirstNameET;
@@ -45,7 +44,7 @@ public class AuthorActivity extends AppCompatActivity {
        Intent result = getIntent();
        String action = result.getAction();
        if(action==UPDATE_DATA) {
-           int author_id = getIntent().getIntExtra(AUTHOR_ID,11 );
+           int author_id = getIntent().getIntExtra(AUTHOR_ID,1);
            setUpdateView(author_id);
        }
        else{
@@ -64,7 +63,6 @@ public class AuthorActivity extends AppCompatActivity {
 
                  authorFirstNameET=(EditText)findViewById(R.id.authorFName);
                  authorNameET = (EditText) findViewById(R.id.authorName);
-
                  boolean saveOK=false;
                  String toastMsg;
 
@@ -84,6 +82,8 @@ public class AuthorActivity extends AppCompatActivity {
                          saveOK=author.isValid();
                          toastMsg= author.toString()+"est bien "+(isSaveAction?"ajouté":"modifié")+" dans la base de donnée";
                          Toast.makeText(AuthorActivity.this, toastMsg, Toast.LENGTH_SHORT).show();
+                         Intent  intent = new Intent(AuthorActivity.this, AuthorList.class);
+                         startActivity(intent);
                      }
                      else {
                          toastMsg="champs vides";
@@ -125,7 +125,7 @@ public class AuthorActivity extends AppCompatActivity {
     }
 
 
-    /****methode permetant de mettre à jour un auteur *****/
+    /****methode permettant de mettre à jour un auteur *****/
     public void updateAuthor(long authorId, String firstname, String name){
         author= SugarRecord.findById(Author.class,authorId);
         author.setFirstName(firstname);
@@ -134,7 +134,7 @@ public class AuthorActivity extends AppCompatActivity {
         //author.save();
         saveButton.setText(SAVE_ACTION);
     }
-    /****methode permetant d'ajouter un nouveau auteur *****/
+    /****methode permettant d'ajouter un nouveau auteur *****/
     public void saveAuthor(String name, String firstname){
         author = new Author(name,firstname);
         SugarRecord.save(author);

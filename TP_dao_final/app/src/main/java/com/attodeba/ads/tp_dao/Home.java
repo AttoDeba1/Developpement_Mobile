@@ -140,6 +140,12 @@ public class Home extends AppCompatActivity {
                   intent.setAction("addBook");
                   startActivity(intent);
                   return true;
+
+              case R.id.action_add_book:
+                  intent = new Intent(getApplicationContext(), AddBook.class);
+                  intent.setAction("addBook");
+                  startActivity(intent);
+                  return true;
           }
           return false;
       }
